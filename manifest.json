@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "resraku chrome Proxy",
+  "version": "1.0",
+  "permissions": ["proxy", "storage", "declarativeNetRequest", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

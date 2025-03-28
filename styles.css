@@ -1,0 +1,67 @@
+/* 全体のレイアウト */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* タイトル */
+h2, h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* フォームのグループ */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* 入力フィールド */
+input, select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background: #fff;
+    width: 100%;
+}
+
+/* ボタンのデザイン */
+.btn {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* 各ボタンの色設定 */
+.apply { background: #007bff; color: white; }
+.toggle { background: #28a745; color: white; }
+.save { background: #ffc107; color: black; }
+.delete { background: #dc3545; color: white; }
