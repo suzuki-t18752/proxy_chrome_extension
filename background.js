@@ -1,19 +1,21 @@
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.get(["proxies", "proxyEnabled"], (result) => {
-      if (!result.proxies) {
-          chrome.storage.local.set({ proxies: {} });
-      }
-      if (result.proxyEnabled === undefined) {
-          chrome.storage.local.set({ proxyEnabled: false });
-      }
+  // プロキシを無効にし、設定をクリア
+  chrome.proxy.settings.clear({});
+
+  // ストレージを初期化
+  chrome.storage.local.set({
+    proxies: {},
+    proxyEnabled: false,
+    selectedProxy: null
   });
 });
 
 function applyProxy() {
-  chrome.storage.local.get(["selectedProxy", "proxies"], (result) => {
+  chrome.storage.local.get(["selectedProxy", "proxies", "proxyEnabled"], (result) => {
       const proxy = result.proxies?.[result.selectedProxy];
       if (!proxy) return;
 
+      // プロキシ設定を常に適用
       chrome.proxy.settings.set({
           value: {
               mode: "fixed_servers",
@@ -38,7 +40,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       chrome.storage.local.get(["proxyEnabled"], (result) => {
           let newState = !result.proxyEnabled;
           chrome.storage.local.set({ proxyEnabled: newState }, () => {
-              newState ? applyProxy() : chrome.proxy.settings.clear({});
+              if (newState) {
+                  applyProxy();
+              } else {
+                  chrome.proxy.settings.clear({});
+              }
               sendResponse({ proxyEnabled: newState });
           });
       });
