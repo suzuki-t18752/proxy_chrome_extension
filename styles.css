@@ -4,7 +4,7 @@ body {
     background: #f4f4f4;
     margin: 0;
     padding: 20px;
-    width: 300px;
+    width: 400px;
     text-align: center;
 }
 
@@ -42,6 +42,7 @@ input, select {
     font-size: 14px;
     background: #fff;
     width: 100%;
+    box-sizing: border-box;
 }
 
 /* ボタンのデザイン */
@@ -54,6 +55,7 @@ input, select {
     transition: 0.3s;
     width: 100%;
     margin-top: 10px;
+    box-sizing: border-box;
 }
 
 .btn:hover {
@@ -65,3 +67,122 @@ input, select {
 .toggle { background: #28a745; color: white; }
 .save { background: #ffc107; color: black; }
 .delete { background: #dc3545; color: white; }
+
+.status-container {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+.status-text {
+    font-weight: bold;
+}
+
+.status-text.enabled {
+    color: #4CAF50;
+}
+
+.status-text.disabled {
+    color: #f44336;
+}
+
+.current-proxy-container {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.proxy-info {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.proxy-info div {
+    margin-bottom: 5px;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #495057;
+    min-width: 60px;
+    display: inline-block;
+}
+
+.proxy-list-container {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.proxy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.proxy-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.proxy-item-info {
+    flex-grow: 1;
+    min-width: 0; /* テキストのオーバーフローを防ぐ */
+}
+
+.proxy-item-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.proxy-item-details {
+    font-size: 0.9em;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.proxy-item-actions {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0; /* ボタンが縮まないようにする */
+}
+
+.proxy-item.active {
+    border-color: #4CAF50;
+    background-color: #e8f5e9;
+}
+
+.new-proxy-container {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.new-proxy-form {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+#toggleNewProxy {
+    width: 100%;
+    margin-bottom: 10px;
+}
