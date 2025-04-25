@@ -10,36 +10,49 @@
     <div class="container">
         <h2>プロキシ管理</h2>
 
-        <label>プロキシ設定を選択:
-            <select id="proxyList"></select>
-        </label>
-        <button id="applyProxy" class="btn">適用</button>
+        <div class="status-container">
+            <span>現在の状態: </span>
+            <span id="proxyStatus" class="status-text">無効</span>
+        </div>
+
+        <div class="proxy-list-container">
+            <h3>プロキシ設定一覧</h3>
+            <div id="proxyListContainer" class="proxy-list">
+                <!-- プロキシ設定がここに表示されます -->
+            </div>
+        </div>
+
         <button id="toggleProxy" class="btn toggle">読み込み中...</button>
 
-        <h3>新しいプロキシ設定</h3>
-        <div class="form-group">
-            <label>名前:</label>
-            <input id="proxyName" type="text" placeholder="My Proxy">
-        </div>
-        <div class="form-group">
-            <label>スキーム (http/https):</label>
-            <input id="scheme" type="text" placeholder="http">
-        </div>
-        <div class="form-group">
-            <label>ホスト:</label>
-            <input id="host" type="text" placeholder="proxy.com">
-        </div>
-        <div class="form-group">
-            <label>ポート:</label>
-            <input id="port" type="number" placeholder="8080">
-        </div>
-        <div class="form-group">
-            <label>バイパスリスト (カンマ区切り):</label>
-            <input id="bypassList" type="text" placeholder="localhost,127.0.0.1">
-        </div>
+        <div class="new-proxy-container">
+            <button id="toggleNewProxy" class="btn">新しいプロキシ設定を追加</button>
+            <div id="newProxyForm" class="new-proxy-form" style="display: none;">
+                <h3>新しいプロキシ設定</h3>
+                <div class="form-group">
+                    <label>名前:</label>
+                    <input id="proxyName" type="text" placeholder="My Proxy">
+                </div>
+                <div class="form-group">
+                    <label>スキーム (http/https):</label>
+                    <input id="scheme" type="text" placeholder="http">
+                </div>
+                <div class="form-group">
+                    <label>ホスト:</label>
+                    <input id="host" type="text" placeholder="proxy.com">
+                </div>
+                <div class="form-group">
+                    <label>ポート:</label>
+                    <input id="port" type="number" placeholder="8080">
+                </div>
+                <div class="form-group">
+                    <label>バイパスリスト (カンマ区切り):</label>
+                    <input id="bypassList" type="text" placeholder="localhost,127.0.0.1">
+                </div>
 
-        <button id="saveProxy" class="btn save">保存</button>
-        <button id="deleteProxy" class="btn delete">削除</button>
+                <button id="saveProxy" class="btn save">保存</button>
+                <button id="deleteProxy" class="btn delete">削除</button>
+            </div>
+        </div>
     </div>
 
     <script src="popup.js"></script>
