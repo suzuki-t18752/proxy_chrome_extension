@@ -11,8 +11,11 @@
         <h2>プロキシ管理</h2>
 
         <div class="status-container">
-            <span>現在の状態: </span>
-            <span id="proxyStatus" class="status-text">無効</span>
+            <span class="status-text disabled" id="proxyStatus">無効</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="toggleProxy">
+                <span class="toggle-slider"></span>
+            </label>
         </div>
 
         <div class="proxy-list-container">
@@ -21,8 +24,6 @@
                 <!-- プロキシ設定がここに表示されます -->
             </div>
         </div>
-
-        <button id="toggleProxy" class="btn toggle">読み込み中...</button>
 
         <div class="new-proxy-container">
             <button id="toggleNewProxy" class="btn">新しいプロキシ設定を追加</button>
@@ -50,7 +51,6 @@
                 </div>
 
                 <button id="saveProxy" class="btn save">保存</button>
-                <button id="deleteProxy" class="btn delete">削除</button>
             </div>
         </div>
     </div>

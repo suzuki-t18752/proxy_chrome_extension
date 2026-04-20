@@ -20,11 +20,19 @@ document.addEventListener("DOMContentLoaded", () => {
       item.className = `proxy-item ${isActive ? "active" : ""}`;
       item.innerHTML = `
           <div class="proxy-item-info">
-              <div class="proxy-item-name">${proxyName}</div>
-              <div class="proxy-item-details">${proxyConfig.host}:${proxyConfig.port}</div>
+              <input type="radio" name="proxySelect" id="proxy_${proxyName}" value="${proxyName}" ${isActive ? "checked" : ""}>
+              <label for="proxy_${proxyName}">
+                  <div class="proxy-item-name">${proxyName}</div>
+                  <div class="proxy-item-details">
+                      <div>スキーム: ${proxyConfig.scheme}</div>
+                      <div>ホスト: ${proxyConfig.host}</div>
+                      <div>ポート: ${proxyConfig.port}</div>
+                      ${proxyConfig.bypassList && proxyConfig.bypassList.length > 0 ?
+                          `<div>バイパス: ${proxyConfig.bypassList.join(', ')}</div>` : ''}
+                  </div>
+              </label>
           </div>
           <div class="proxy-item-actions">
-              <button class="btn apply" data-name="${proxyName}">適用</button>
               <button class="btn delete" data-name="${proxyName}">削除</button>
           </div>
       `;
@@ -38,10 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
           proxyListContainer.appendChild(item);
       });
 
-      // イベントリスナーを設定
-      proxyListContainer.querySelectorAll(".btn.apply").forEach(button => {
-          button.addEventListener("click", () => {
-              const proxyName = button.dataset.name;
+      // ラジオボタンのイベントリスナーを設定
+      proxyListContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
+          radio.addEventListener("change", () => {
+              const proxyName = radio.value;
               chrome.storage.local.set({ selectedProxy: proxyName }, () => {
                   chrome.runtime.sendMessage({ action: "applyProxy" });
                   loadProxies();
@@ -53,14 +61,16 @@ document.addEventListener("DOMContentLoaded", () => {
       proxyListContainer.querySelectorAll(".btn.delete").forEach(button => {
           button.addEventListener("click", () => {
               const proxyName = button.dataset.name;
-              chrome.storage.local.get("proxies", (result) => {
-                  const proxies = result.proxies || {};
-                  delete proxies[proxyName];
-                  chrome.storage.local.set({ proxies }, () => {
-                      loadProxies();
-                      alert("プロキシ設定を削除しました！");
+              if (confirm(`${proxyName}のプロキシ設定を削除してもよろしいですか？`)) {
+                  chrome.storage.local.get("proxies", (result) => {
+                      const proxies = result.proxies || {};
+                      delete proxies[proxyName];
+                      chrome.storage.local.set({ proxies }, () => {
+                          loadProxies();
+                          alert("プロキシ設定を削除しました！");
+                      });
                   });
-              });
+              }
           });
       });
   }
@@ -68,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateProxyStatus(enabled) {
       proxyStatus.textContent = enabled ? "有効" : "無効";
       proxyStatus.className = "status-text " + (enabled ? "enabled" : "disabled");
+      toggleButton.checked = enabled;
   }
 
   function loadProxies() {
@@ -77,7 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
           const proxyEnabled = result.proxyEnabled || false;
 
           updateProxyList(proxies, selectedProxy);
-          toggleButton.textContent = proxyEnabled ? "プロキシOFF" : "プロキシON";
           updateProxyStatus(proxyEnabled);
       });
   }
@@ -127,12 +137,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  toggleButton.addEventListener("click", () => {
+  toggleButton.addEventListener("change", () => {
       chrome.runtime.sendMessage({ action: "toggleProxy" }, (response) => {
           if (response && response.proxyEnabled !== undefined) {
-              toggleButton.textContent = response.proxyEnabled ? "プロキシOFF" : "プロキシON";
               updateProxyStatus(response.proxyEnabled);
-              loadProxies(); // プロキシ設定の表示を更新
+              loadProxies();
           }
       });
   });

@@ -4,7 +4,7 @@ body {
     background: #f4f4f4;
     margin: 0;
     padding: 20px;
-    width: 400px;
+    width: 500px; /* 横幅をさらに広げる */
     text-align: center;
 }
 
@@ -23,43 +23,42 @@ h2, h3 {
 
 /* フォームのグループ */
 .form-group {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 10px;
     text-align: left;
 }
 
-label {
-    font-weight: bold;
+.form-group label {
+    display: block;
     margin-bottom: 5px;
+    font-weight: bold;
 }
 
-/* 入力フィールド */
-input, select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    background: #fff;
+.form-group input {
     width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     box-sizing: border-box;
 }
 
 /* ボタンのデザイン */
 .btn {
-    padding: 10px;
+    padding: 6px 12px;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: 0.3s;
-    width: 100%;
-    margin-top: 10px;
-    box-sizing: border-box;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    white-space: nowrap;
 }
 
-.btn:hover {
-    opacity: 0.8;
+.btn.delete {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn.delete:hover {
+    background-color: #d32f2f;
 }
 
 /* 各ボタンの色設定 */
@@ -68,7 +67,58 @@ input, select {
 .save { background: #ffc107; color: black; }
 .delete { background: #dc3545; color: white; }
 
+/* トグルスイッチのスタイル */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin: 0 10px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: #2196F3;
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+/* ステータスコンテナのスタイル */
 .status-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 15px;
     padding: 10px;
     background-color: #f5f5f5;
@@ -77,6 +127,7 @@ input, select {
 
 .status-text {
     font-weight: bold;
+    margin: 0 10px;
 }
 
 .status-text.enabled {
@@ -111,6 +162,7 @@ input, select {
     display: inline-block;
 }
 
+/* プロキシリストのスタイル */
 .proxy-list-container {
     margin: 15px 0;
     padding: 15px;
@@ -128,43 +180,67 @@ input, select {
 .proxy-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: white;
+    align-items: flex-start; /* 上部揃えに変更 */
+    padding: 12px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
     border-radius: 4px;
-    border: 1px solid #dee2e6;
+    background-color: white;
 }
 
 .proxy-item-info {
-    flex-grow: 1;
-    min-width: 0; /* テキストのオーバーフローを防ぐ */
+    display: flex;
+    align-items: flex-start; /* 上部揃えに変更 */
+    flex: 1;
+    min-width: 0;
+    margin-right: 10px; /* 右側に余白を追加 */
+}
+
+.proxy-item-info input[type="radio"] {
+    margin-top: 3px; /* ラジオボタンの位置を調整 */
+    margin-right: 10px;
+}
+
+.proxy-item-info label {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    min-width: 0;
+    flex: 1;
 }
 
 .proxy-item-name {
     font-weight: bold;
     margin-bottom: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: #333;
 }
 
 .proxy-item-details {
-    font-size: 0.9em;
     color: #666;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.proxy-item-details div {
+    margin-bottom: 3px;
+    line-height: 1.4;
+    word-break: break-all;
+}
+
+.proxy-item.active {
+    background-color: #e6f7ff;
+    border-color: #1890ff;
+}
+
+.proxy-item.active .proxy-item-name {
+    color: #1890ff;
 }
 
 .proxy-item-actions {
     display: flex;
     gap: 5px;
-    flex-shrink: 0; /* ボタンが縮まないようにする */
-}
-
-.proxy-item.active {
-    border-color: #4CAF50;
-    background-color: #e8f5e9;
+    flex-shrink: 0;
+    margin-top: 3px; /* 上部の余白を追加 */
 }
 
 .new-proxy-container {
@@ -175,7 +251,7 @@ input, select {
 }
 
 .new-proxy-form {
-    margin-top: 10px;
+    margin-top: 15px;
     padding: 15px;
     background-color: white;
     border-radius: 4px;
